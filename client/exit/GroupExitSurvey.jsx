@@ -267,7 +267,7 @@ export default class GroupExitSurvey extends React.Component {
               className={"form-group"}
               inline={false}
               label={"Feedback, including problems you encountered."}
-              labelFor={"fair"}
+              labelFor={"feedback"}
               //className={"form-group"}
             >
               <TextArea
@@ -280,80 +280,37 @@ export default class GroupExitSurvey extends React.Component {
                 fill={true}
               />
             </FormGroup>
-
-            {/* <div className="pt-form-group">
-              <label className="pt-label" htmlFor="age">
-                How would you describe your strategy in the game?
-              </label>
-              <div className="pt-form-content">
-                <textarea
-                  className="pt-input pt-fill"
-                  dir="auto"
-                  name="strategy"
-                  value={strategy}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="pt-form-group">
-              <label className="pt-label" htmlFor="age">
-                Do you feel the pay was fair?
-              </label>
-              <div className="pt-form-content">
-                <textarea
-                  className="pt-input pt-fill"
-                  dir="auto"
-                  name="fair"
-                  value={fair}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="pt-form-group">
-              <label className="pt-label" htmlFor="age">
-                Feedback, including problems you encountered.
-              </label>
-              <div className="pt-form-content">
-                <textarea
-                  className="pt-input pt-fill"
-                  dir="auto"
-                  name="feedback"
-                  value={feedback}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div> */}
           </div>
 
           <div className="form-line thirds">
             <FormGroup
               className={"form-group"}
               inline={false}
-              label={"How would you describe your strategy in the game?"}
-              labelFor={"chat"}
+              label={"Was the in-game chat feature useful?"}
+              labelFor={"chatUseful"}
               //className={"form-group"}
             >
               <TextArea
-                id="chat"
+                id="chatUseful"
+                name="chatUseful"
                 large={true}
                 intent={Intent.PRIMARY}
                 onChange={this.handleChange}
                 value={chatUseful}
                 fill={true}
-                name="chat"
               />
             </FormGroup>
 
             <FormGroup
               className={"form-group"}
               inline={false}
-              label={"Do you feel the pay was fair?"}
-              labelFor={"log"}
+              label={"Was the events log feature useful?"}
+              labelFor={"events"}
               //className={"form-group"}
             >
               <TextArea
-                id="log"
-                name="log"
+                id="events"
+                name="events"
                 large={true}
                 intent={Intent.PRIMARY}
                 onChange={this.handleChange}
@@ -361,34 +318,6 @@ export default class GroupExitSurvey extends React.Component {
                 fill={true}
               />
             </FormGroup>
-            {/* <div className="pt-form-group">
-              <label className="pt-label" htmlFor="age">
-                Was the in-game chat feature useful??
-              </label>
-              <div className="pt-form-content">
-                <textarea
-                  className="pt-input pt-fill"
-                  dir="auto"
-                  name="chatUseful"
-                  value={chatUseful}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="pt-form-group">
-              <label className="pt-label" htmlFor="age">
-                Was the events log feature useful?
-              </label>
-              <div className="pt-form-content">
-                <textarea
-                  className="pt-input pt-fill"
-                  dir="auto"
-                  name="events"
-                  value={events}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div> */}
           </div>
 
           <button type="submit" className="pt-button pt-intent-primary">
