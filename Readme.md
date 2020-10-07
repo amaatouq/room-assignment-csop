@@ -1,8 +1,8 @@
 # Room Assignment Problem
 
 This is an experiment powered by
-[Empirica](https://github.com/empiricaly/empirica) (here is a basic
-[tutorial](https://github.com/empiricaly/tutorials/tree/master/guess-correlation-tutorial)).
+[Empirica](https://empirica.ly/) (here is a basic
+[tutorial](https://www.youtube.com/watch?v=K2YhEZey_58&list=PLPQelvUwyVgiawBDk3Sp74QMfL8RPgORW&index=1)).
 Through this experiment we attempt to answer the question: **How does team
 composition affect team performance?**
 
