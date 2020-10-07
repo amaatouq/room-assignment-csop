@@ -47,10 +47,10 @@ You and a group of friends can play with this experiment as we ran it by followi
 1. [Download](https://github.com/amaatouq/room-assignment.git) the repository (and unzip). Alternatively, from terminal just run:
 
 ```ssh
-git clone https://github.com/amaatouq/room-assigment
+git clone https://github.com/amaatouq/room-assignment-csop
 ```
 
-2. Go into the folder with `cd room-assignment`
+2. Go into the folder with `cd room-assignment-csop`
 3. Install the required dependencies `meteor npm install`
 4. Edit the `admin` password in the settings file `local.json` to something you like.
 5. Run the local instance with `meteor --settings local.json`
