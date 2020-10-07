@@ -5,5 +5,11 @@ production.json
 prod.json
 staging.json
 development.json
-dev.json
 local.json
+dev.json
+**/.idea
+.DS_Store
+deployment.json
+token.json
+.idea/vcs.xml
+.idea/workspace.xml
