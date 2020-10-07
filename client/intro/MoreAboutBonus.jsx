@@ -79,7 +79,7 @@ export default class MoreAboutBonus extends React.Component {
               big part of the bonus is for finding the BEST possible
               assignment{" "}
             </strong>{" "}
-            (i.e., "optimal assignment bonus", which can be up to $3.5 total).
+            (i.e., "optimal assignment bonus", which can be up to $5 total).
             Also,
             <strong>
               you can earn more game points (i.e., more performance-based
