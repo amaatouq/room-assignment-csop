@@ -9,7 +9,7 @@ local.json
 dev.json
 **/.idea
 .DS_Store
-deployment.json
+deployment-mm.json
 token.json
 .idea/vcs.xml
 .idea/workspace.xml

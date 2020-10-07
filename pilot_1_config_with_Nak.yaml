@@ -1,0 +1,171 @@
+treatments:
+  - name: solo
+    factorIds:
+      - yLgJTwkJB3dh4jh3r
+      - A6nriq6uaerSLGxv2
+      - 5pe9oxxmnLrbFbADH
+      - iZyssrDWEYhnc8Q7B
+      - RhXZkZdj5fYbQNssb
+      - nNqv434CrsBRjkPLE
+      - 5a3BHuGGrhibwagjF
+    archivedAt: 2020-10-07T15:47:05.294Z
+  - name: team
+    factorIds:
+      - DjKCDtyNpyHu7XvP9
+      - A6nriq6uaerSLGxv2
+      - 5pe9oxxmnLrbFbADH
+      - iZyssrDWEYhnc8Q7B
+      - RhXZkZdj5fYbQNssb
+      - nNqv434CrsBRjkPLE
+      - 5a3BHuGGrhibwagjF
+    archivedAt: 2020-10-07T15:47:06.387Z
+  - name: Pilot_1
+    factorIds:
+      - Kiq8oRmRjpXuoYdcD
+      - kewtZRszAJCk96vbQ
+      - 5pe9oxxmnLrbFbADH
+      - iZyssrDWEYhnc8Q7B
+      - b9tnQAPGuoAxn7oTL
+      - YtwkFRq8i9A2pAftN
+      - rsgddxTsXsx8zwbNi
+    archivedAt: 2020-10-07T16:09:49.692Z
+  - name: pilot_1
+    factorIds:
+      - rsgddxTsXsx8zwbNi
+      - YtwkFRq8i9A2pAftN
+      - b9tnQAPGuoAxn7oTL
+      - iZyssrDWEYhnc8Q7B
+      - 5pe9oxxmnLrbFbADH
+      - kewtZRszAJCk96vbQ
+      - Kiq8oRmRjpXuoYdcD
+factorTypes:
+  - _id: LJfAKhrfemFN5Wg7r
+    name: playerCount
+    description: The Number of players participating in the given game.
+    required: true
+    type: Integer
+    min: 1
+  - _id: ZzHiS2M4TFGPQRPsL
+    name: stageDuration
+    description: Specifies how many seconds for each decision stage
+    required: false
+    type: Integer
+    min: 5
+    max: 1000
+  - _id: YuxymxgdicnLpwqQq
+    name: stepOne
+    description: SequenceOne of 5 tasks or SequenceTwo of 5 tasks
+    required: true
+    type: Boolean
+  - _id: rfisFt6sGMhs7FN4P
+    name: taskOrder
+    description: How to do the sequence to be ordered
+    required: false
+    type: String
+    archivedAt: 2018-10-15T17:22:05.622Z
+  - _id: K5zoaut98tuZsmpa7
+    name: basePay
+    description: 'The amount for base pay (i.e., showing up and completing the experiment)'
+    required: false
+    type: Number
+    min: 0
+    max: 1
+  - _id: CgCzQdbcMNh6JqAZT
+    name: conversionRate
+    description: This will be multiplied by their total score to compute the bonus
+    required: false
+    type: Number
+    min: 0
+    max: 10
+  - _id: 9HMtrxYDhvFhhcrzM
+    name: optimalSolutionBonus
+    description: 'For each optimal solution, what is the additional bonus? (in dollars)'
+    required: false
+    type: Number
+    min: 0
+    max: 10
+  - _id: gyMzogFBfCYjqZmz3
+    name: shuffleTaskOrder
+    description: How to do the sequence to be ordered
+    required: false
+    type: Boolean
+factors:
+  - _id: taHsHxeTdmZkWszwE
+    name: 'true'
+    value: true
+    factorTypeId: YuxymxgdicnLpwqQq
+  - _id: 5pe9oxxmnLrbFbADH
+    name: 'false'
+    value: false
+    factorTypeId: YuxymxgdicnLpwqQq
+  - _id: 5a3BHuGGrhibwagjF
+    name: 'true'
+    value: true
+    factorTypeId: gyMzogFBfCYjqZmz3
+  - _id: rsgddxTsXsx8zwbNi
+    name: 'false'
+    value: false
+    factorTypeId: gyMzogFBfCYjqZmz3
+  - _id: yLgJTwkJB3dh4jh3r
+    name: solo
+    value: 1
+    factorTypeId: LJfAKhrfemFN5Wg7r
+  - _id: DjKCDtyNpyHu7XvP9
+    name: team
+    value: 3
+    factorTypeId: LJfAKhrfemFN5Wg7r
+  - _id: A6nriq6uaerSLGxv2
+    name: 5min
+    value: 300
+    factorTypeId: ZzHiS2M4TFGPQRPsL
+  - _id: t8JscYzadj76bngCD
+    name: none
+    value: 0
+    factorTypeId: K5zoaut98tuZsmpa7
+  - _id: iZyssrDWEYhnc8Q7B
+    name: oneDollar
+    value: 1
+    factorTypeId: K5zoaut98tuZsmpa7
+  - _id: tXtK9D88FvXWay7kQ
+    name: none
+    value: 0
+    factorTypeId: CgCzQdbcMNh6JqAZT
+  - _id: RhXZkZdj5fYbQNssb
+    name: low
+    value: 0.00001
+    factorTypeId: CgCzQdbcMNh6JqAZT
+  - _id: nNqv434CrsBRjkPLE
+    name: 50cents
+    value: 0.5
+    factorTypeId: 9HMtrxYDhvFhhcrzM
+  - _id: kewtZRszAJCk96vbQ
+    name: 10min
+    value: 600
+    factorTypeId: ZzHiS2M4TFGPQRPsL
+  - _id: b9tnQAPGuoAxn7oTL
+    name: high
+    value: 0.002
+    factorTypeId: CgCzQdbcMNh6JqAZT
+  - _id: YtwkFRq8i9A2pAftN
+    name: 1dollar
+    value: 1
+    factorTypeId: 9HMtrxYDhvFhhcrzM
+  - _id: Kiq8oRmRjpXuoYdcD
+    name: dyad
+    value: 2
+    factorTypeId: LJfAKhrfemFN5Wg7r
+  - _id: JKa9b9RAXmJ3LxpFs
+    name: medium
+    value: 0.001
+    factorTypeId: CgCzQdbcMNh6JqAZT
+lobbyConfigs:
+  - timeoutType: lobby
+    timeoutInSeconds: 300
+    timeoutStrategy: fail
+    gameLobbyIds: []
+    archivedAt: 2020-10-07T16:06:40.486Z
+  - name: 10min
+    timeoutType: lobby
+    timeoutInSeconds: 600
+    timeoutStrategy: ignore
+    gameLobbyIds: []

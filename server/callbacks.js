@@ -6,7 +6,7 @@ import Empirica from "meteor/empirica:core";
 // the first onRoundStart. It receives the game and list of all the players in
 // the game.
 Empirica.onGameStart((game) => {
-  players = game.players;
+  const players = game.players;
   console.debug("game ", game._id, " started");
 
   const names = [
@@ -37,7 +37,7 @@ Empirica.onGameStart((game) => {
     "#3D50B7",
     "#70A945",
     "#DE8AAB",
-    "A59144",
+    "#A59144",
     "#DER5F4",
     "#EB8TWV",
     "#N0WFA4",
@@ -62,7 +62,7 @@ Empirica.onRoundStart((game, round) => {});
 // onRoundStart is triggered before each stage starts.
 // It receives the same options as onRoundStart, and the stage that is starting.
 Empirica.onStageStart((game, round, stage) => {
-  players = game.players;
+  const players = game.players;
   console.debug("Round ", stage.name, "game", game._id, " started");
   const team = game.get("team");
   console.log("is it team?", team);
@@ -128,7 +128,7 @@ Empirica.onRoundEnd((game, round) => {});
 // onRoundEnd is triggered when the game ends.
 // It receives the same options as onGameStart.
 Empirica.onGameEnd((game) => {
-  players = game.players;
+  const players = game.players;
   console.debug("The game", game._id, "has ended");
   //computing the bonus for everyone (in this game, everyone will get the same value)
   const conversionRate = game.treatment.conversionRate
@@ -189,7 +189,7 @@ Empirica.onSet(
     value, // New value
     prevValue // Previous value
   ) => {
-    players = game.players;
+    const players = game.players;
     //someone changed their satisfaction status
     console.log("key", key);
     if (key === "satisfied") {
