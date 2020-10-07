@@ -1,8 +1,16 @@
 import React from "react";
 
-import {Centered} from "meteor/empirica:core";
+import { Centered } from "meteor/empirica:core";
 
-import { Radio, RadioGroup } from "@blueprintjs/core";
+import {
+  Button,
+  Classes,
+  FormGroup,
+  RadioGroup,
+  TextArea,
+  Intent,
+  Radio,
+} from "@blueprintjs/core";
 
 export default class GroupExitSurvey extends React.Component {
   static stepName = "ExitSurvey";
@@ -15,15 +23,15 @@ export default class GroupExitSurvey extends React.Component {
     perspective: "",
     chatComfort: "",
     chatUseful: "",
-    events: ""
+    events: "",
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const el = event.currentTarget;
     this.setState({ [el.name]: el.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.state);
   };
@@ -58,7 +66,7 @@ export default class GroupExitSurvey extends React.Component {
       perspective,
       chatComfort,
       events,
-      chatUseful
+      chatUseful,
     } = this.state;
 
     return (
@@ -219,7 +227,61 @@ export default class GroupExitSurvey extends React.Component {
           </div>
 
           <div className="form-line thirds">
-            <div className="pt-form-group">
+            <FormGroup
+              className={"form-group"}
+              inline={false}
+              label={"How would you describe your strategy in the game?"}
+              labelFor={"strategy"}
+              //className={"form-group"}
+            >
+              <TextArea
+                id="strategy"
+                large={true}
+                intent={Intent.PRIMARY}
+                onChange={this.handleChange}
+                value={strategy}
+                fill={true}
+                name="strategy"
+              />
+            </FormGroup>
+
+            <FormGroup
+              className={"form-group"}
+              inline={false}
+              label={"Do you feel the pay was fair?"}
+              labelFor={"fair"}
+              //className={"form-group"}
+            >
+              <TextArea
+                id="fair"
+                name="fair"
+                large={true}
+                intent={Intent.PRIMARY}
+                onChange={this.handleChange}
+                value={fair}
+                fill={true}
+              />
+            </FormGroup>
+
+            <FormGroup
+              className={"form-group"}
+              inline={false}
+              label={"Feedback, including problems you encountered."}
+              labelFor={"fair"}
+              //className={"form-group"}
+            >
+              <TextArea
+                id="feedback"
+                name="feedback"
+                large={true}
+                intent={Intent.PRIMARY}
+                onChange={this.handleChange}
+                value={feedback}
+                fill={true}
+              />
+            </FormGroup>
+
+            {/* <div className="pt-form-group">
               <label className="pt-label" htmlFor="age">
                 How would you describe your strategy in the game?
               </label>
@@ -260,11 +322,46 @@ export default class GroupExitSurvey extends React.Component {
                   onChange={this.handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="form-line thirds">
-            <div className="pt-form-group">
+            <FormGroup
+              className={"form-group"}
+              inline={false}
+              label={"How would you describe your strategy in the game?"}
+              labelFor={"chat"}
+              //className={"form-group"}
+            >
+              <TextArea
+                id="chat"
+                large={true}
+                intent={Intent.PRIMARY}
+                onChange={this.handleChange}
+                value={chatUseful}
+                fill={true}
+                name="chat"
+              />
+            </FormGroup>
+
+            <FormGroup
+              className={"form-group"}
+              inline={false}
+              label={"Do you feel the pay was fair?"}
+              labelFor={"log"}
+              //className={"form-group"}
+            >
+              <TextArea
+                id="log"
+                name="log"
+                large={true}
+                intent={Intent.PRIMARY}
+                onChange={this.handleChange}
+                value={events}
+                fill={true}
+              />
+            </FormGroup>
+            {/* <div className="pt-form-group">
               <label className="pt-label" htmlFor="age">
                 Was the in-game chat feature useful??
               </label>
@@ -291,7 +388,7 @@ export default class GroupExitSurvey extends React.Component {
                   onChange={this.handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <button type="submit" className="pt-button pt-intent-primary">

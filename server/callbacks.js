@@ -6,12 +6,45 @@ import Empirica from "meteor/empirica:core";
 // the first onRoundStart. It receives the game and list of all the players in
 // the game.
 Empirica.onGameStart((game) => {
-  players = game.players
+  players = game.players;
   console.debug("game ", game._id, " started");
 
-  const names = ["Blue", "Green", "Pink", "Yellow"]; // for the players names to match avatar color
-  const avatarNames = ["Colton", "Aaron", "Alex", "Tristan"]; // to do more go to https://jdenticon.com/#icon-D3
-  const nameColor = ["#3D50B7", "#70A945", "#DE8AAB", "A59144"]; // similar to the color of the avatar
+  const names = [
+    "Blue",
+    "Green",
+    "Pink",
+    "Yellow",
+    "Purple",
+    "Red",
+    "Turqoise",
+    "Gold",
+    "Grey",
+    "Magenta",
+  ]; // for the players names to match avatar color
+  const avatarNames = [
+    "Colton",
+    "Aaron",
+    "Alex",
+    "Tristan",
+    "Daniel",
+    "Jill",
+    "Jimmy",
+    "Adam",
+    "Flynn",
+    "Annalise",
+  ]; // to do more go to https://jdenticon.com/#icon-D3
+  const nameColor = [
+    "#3D50B7",
+    "#70A945",
+    "#DE8AAB",
+    "A59144",
+    "#DER5F4",
+    "#EB8TWV",
+    "#N0WFA4",
+    "#TP3BWU",
+    "#QW7MI9",
+    "#EB8TWj",
+  ]; // similar to the color of the avatar
 
   players.forEach((player, i) => {
     player.set("name", names[i]);
@@ -29,7 +62,7 @@ Empirica.onRoundStart((game, round) => {});
 // onRoundStart is triggered before each stage starts.
 // It receives the same options as onRoundStart, and the stage that is starting.
 Empirica.onStageStart((game, round, stage) => {
-  players = game.players
+  players = game.players;
   console.debug("Round ", stage.name, "game", game._id, " started");
   const team = game.get("team");
   console.log("is it team?", team);
@@ -44,18 +77,18 @@ Empirica.onStageStart((game, round, stage) => {
         stage.name === "practice"
           ? stage.name + " (will not count towards your score)"
           : stage.name,
-      at: new Date()
-    }
+      at: new Date(),
+    },
   ]);
   stage.set("intermediateSolutions", []);
 
   const task = stage.get("task");
-  task.students.forEach(student => {
+  task.students.forEach((student) => {
     stage.set(`student-${student}-room`, "deck");
     stage.set(`student-${student}-dragger`, null);
   });
 
-  players.forEach(player => {
+  players.forEach((player) => {
     player.set("satisfied", false);
   });
 
@@ -95,7 +128,7 @@ Empirica.onRoundEnd((game, round) => {});
 // onRoundEnd is triggered when the game ends.
 // It receives the same options as onGameStart.
 Empirica.onGameEnd((game) => {
-  players = game.players
+  players = game.players;
   console.debug("The game", game._id, "has ended");
   //computing the bonus for everyone (in this game, everyone will get the same value)
   const conversionRate = game.treatment.conversionRate
@@ -114,7 +147,7 @@ Empirica.onGameEnd((game) => {
         ).toFixed(2)
       : 0;
 
-  players.forEach(player => {
+  players.forEach((player) => {
     if (player.get("bonus") === 0) {
       //if we never computed their bonus
       player.set("bonus", bonus);
@@ -144,85 +177,87 @@ Empirica.onGameEnd((game) => {
 
 // // onSet is called when the experiment code call the .set() method
 // // on games, rounds, stages, players, playerRounds or playerStages.
-Empirica.onSet((
-  game,
-  round,
-  stage,
-  player, // Player who made the change
-  target, // Object on which the change was made (eg. player.set() => player)
-  targetType, // Type of object on which the change was made (eg. player.set() => "player")
-  key, // Key of changed value (e.g. player.set("score", 1) => "score")
-  value, // New value
-  prevValue // Previous value
-) => {
+Empirica.onSet(
+  (
+    game,
+    round,
+    stage,
+    player, // Player who made the change
+    target, // Object on which the change was made (eg. player.set() => player)
+    targetType, // Type of object on which the change was made (eg. player.set() => "player")
+    key, // Key of changed value (e.g. player.set("score", 1) => "score")
+    value, // New value
+    prevValue // Previous value
+  ) => {
+    players = game.players;
+    //someone changed their satisfaction status
+    console.log("key", key);
+    if (key === "satisfied") {
+      //check if everyone is satisfied and if so, submit their answer
+      let allSatisfied = true;
+      players.forEach((player) => {
+        allSatisfied = player.get("satisfied") && allSatisfied;
+      });
+      if (allSatisfied) {
+        players.forEach((player) => {
+          player.stage.submit();
+        });
+      }
+      return;
+    }
 
-  players = game.players
-  //someone changed their satisfaction status
-  if (key === "satisfied") {
-    //check if everyone is satisfied and if so, submit their answer
-    let allSatisfied = true;
-    players.forEach(player => {
-      allSatisfied = player.get("satisfied") && allSatisfied;
-    });
-    if (allSatisfied) {
-      players.forEach(player => {
-        player.stage.submit();
+    //someone placed a student to a room
+    if (key.substring(0, 8) === "student-" && key.slice(-4) === "room") {
+      const task = stage.get("task");
+      let assignments = { deck: [] };
+      task.rooms.forEach((room) => {
+        assignments[room] = [];
+      });
+
+      //find the rooms for each player
+      task.students.forEach((student) => {
+        const room = stage.get(`student-${student}-room`);
+        assignments[room].push(student);
+      });
+
+      //check for constraint violations
+      const violationIds = getViolations(stage, assignments);
+      stage.set("violatedConstraints", violationIds);
+
+      //get score if there are no violations, otherwise, the score is 0
+      const currentScore =
+        assignments["deck"].length === 0
+          ? getScore(task, assignments, violationIds.length)
+          : 0;
+      //console.debug("currentScore", currentScore);
+      stage.set("score", currentScore || 0);
+
+      if (currentScore === task.optimal) {
+        stage.set("optimalFound", true);
+      }
+
+      //keep track of solution, scores, and violated constraints
+      //TODO: eventually this should have the 'log' parameter so it is not sent to the UI
+      //TODO: how about I store everything here, and that's it! less data
+      stage.append("intermediateSolutions", {
+        solution: assignments,
+        at: new Date(),
+        violatedConstraintsIds: violationIds,
+        nConstraintsViolated: violationIds.length,
+        score: getScore(task, assignments, violationIds.length),
+        optimalFound: currentScore === task.optimal,
+        completeSolution: assignments["deck"].length === 0,
+        completeSolutionScore: currentScore,
       });
     }
-    return;
   }
-
-  //someone placed a student to a room
-  if (key.substring(0, 8) === "student-" && key.slice(-4) === "room") {
-    const task = stage.get("task");
-    let assignments = { deck: [] };
-    task.rooms.forEach(room => {
-      assignments[room] = [];
-    });
-
-    //find the rooms for each player
-    task.students.forEach(student => {
-      const room = stage.get(`student-${student}-room`);
-      assignments[room].push(student);
-    });
-
-    //check for constraint violations
-    const violationIds = getViolations(stage, assignments);
-    stage.set("violatedConstraints", violationIds);
-
-    //get score if there are no violations, otherwise, the score is 0
-    const currentScore =
-      assignments["deck"].length === 0
-        ? getScore(task, assignments, violationIds.length)
-        : 0;
-    //console.debug("currentScore", currentScore);
-    stage.set("score", currentScore || 0);
-
-    if (currentScore === task.optimal) {
-      stage.set("optimalFound", true);
-    }
-
-    //keep track of solution, scores, and violated constraints
-    //TODO: eventually this should have the 'log' parameter so it is not sent to the UI
-    //TODO: how about I store everything here, and that's it! less data
-    stage.append("intermediateSolutions", {
-      solution: assignments,
-      at: new Date(),
-      violatedConstraintsIds: violationIds,
-      nConstraintsViolated: violationIds.length,
-      score: getScore(task, assignments, violationIds.length),
-      optimalFound: currentScore === task.optimal,
-      completeSolution: assignments["deck"].length === 0,
-      completeSolutionScore: currentScore
-    });
-  }
-});
+);
 
 //helpers
 function getScore(task, assignments, nViolations) {
   let score = 0;
-  Object.keys(assignments).forEach(room => {
-    assignments[room].forEach(student => {
+  Object.keys(assignments).forEach((room) => {
+    assignments[room].forEach((student) => {
       score += task.payoff[student][room];
     });
   });
@@ -230,7 +265,7 @@ function getScore(task, assignments, nViolations) {
 }
 
 function find_room(assignments, student) {
-  return Object.keys(assignments).find(room =>
+  return Object.keys(assignments).find((room) =>
     assignments[room].includes(student)
   );
 }
@@ -240,7 +275,7 @@ function getViolations(stage, assignments) {
   const task = stage.get("task");
   const violatedConstraintsIds = [];
 
-  task.constraints.forEach(constraint => {
+  task.constraints.forEach((constraint) => {
     const firstStudentRoom = find_room(assignments, constraint.pair[0]);
     const secondStudentRoom = find_room(assignments, constraint.pair[1]);
 
