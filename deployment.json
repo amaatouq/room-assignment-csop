@@ -1,0 +1,14 @@
+{
+    "admins": [
+      {
+        "username": "admin",
+        "password": "SecretPassword"
+      }
+    ],
+    "galaxy.meteor.com": {
+      "env": {
+        "MONGO_URL": "mongodb+srv://dapacica:SecretPassword@cluster0.0funy.mongodb.net/test",
+        "MONGO_OPLOG_URL": "mongodb+srv://oploguser:SecretPassword2@cluster0.0funy.mongodb.net/local"
+      }
+    }
+  }

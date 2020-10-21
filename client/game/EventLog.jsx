@@ -1,13 +1,16 @@
 import React from "react";
 import moment from "moment/moment";
 import Author from "./Author";
+import { TimeSync } from "meteor/mizzao:timesync";
 
 export default class EventLog extends React.Component {
   componentDidMount() {
     this.eventsEl.scrollTop = this.eventsEl.scrollHeight;
+    console.log("time", moment(TimeSync.serverTime(new Date(), 1000)));
   }
 
   componentDidUpdate(prevProps) {
+    console.log(moment(TimeSync.serverTime(null, 1000)).format('HH:mm:ss'));
     if (prevProps.events.length < this.props.events.length) {
       this.eventsEl.scrollTop = this.eventsEl.scrollHeight;
     }
@@ -19,7 +22,7 @@ export default class EventLog extends React.Component {
     //if the one who made the event is the player himself then self will be true
     return (
       <div className="eventlog bp3-card">
-        <div className="events" ref={el => (this.eventsEl = el)}>
+        <div className="events" ref={(el) => (this.eventsEl = el)}>
           {events.map((event, i) => (
             <Event
               key={i}
@@ -42,7 +45,7 @@ class Event extends React.Component {
       object,
       target,
       state,
-      at
+      at,
     } = this.props.event;
     const { self } = this.props;
     let content;
@@ -90,6 +93,7 @@ class Event extends React.Component {
     }
 
     return (
+      
       <div className="event">
         {/*
           Not sure we even need to show am/pm. I think we need seconds since the
@@ -99,6 +103,7 @@ class Event extends React.Component {
           relevant. Might or might not be clear.
         */}
         {/* <div className="timestamp">{moment(at).format("hh:mm:ss a")}</div> */}
+        
         <div className="timestamp">{moment(at).format("hh:mm:ss")}</div>
         {content}
       </div>

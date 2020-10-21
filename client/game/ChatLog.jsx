@@ -1,25 +1,45 @@
 import React from "react";
 import Author from "./Author";
+import { TimeSync } from "meteor/mizzao:timesync";
+import moment from "moment";
+
+var Filter = require('bad-words'),
+    filter = new Filter();
 
 export default class ChatLog extends React.Component {
-  state = { comment: "" };
+  state = { comment: "", time: 0 };
 
-  
-  handleChange = e => {
+  handleChange = (e) => {
     const el = e.currentTarget;
+    console.log('el', el.value)
     this.setState({ [el.name]: el.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    const text = this.state.comment.trim();
+    const text = filter.clean(this.state.comment.trim());
+    // console.log("submitted");
+    // console.log(filter.clean("Don't be an ash0le"));
+    // console.log(moment(TimeSync.serverTime(null, 1000)));
+    // console.log(moment(TimeSync.serverTime(new Date(), 1000)).format('HH:mm:ss'));
+    // console.log('just timesync', new Date(TimeSync.serverTime(null, 1000)))
+    // console.log('server time dif', TimeSync.serverOffset())
+    // console.log('is synced?', TimeSync.isSynced())
+    
+    console.log(new Date( Date.now() + TimeSync.serverOffset()));
+    
+    
     if (text !== "") {
       const { stage, player } = this.props;
+     
+     
       stage.append("chat", {
         text,
-        playerId: player._id
+        playerId: player._id,
+        at: moment(TimeSync.serverTime(null, 1000))
       });
       this.setState({ comment: "" });
+      this.setState({ time: 0 });
     }
   };
 
@@ -27,6 +47,8 @@ export default class ChatLog extends React.Component {
     const { comment } = this.state;
     const { messages, player } = this.props;
 
+    console.log('message', messages);
+    console.log('comment', comment)
     return (
       <div className="chat bp3-card">
         <Messages messages={messages} player={player} />
@@ -47,6 +69,7 @@ export default class ChatLog extends React.Component {
           </div>
         </form>
       </div>
+      
     );
   }
 }
@@ -56,7 +79,7 @@ class Messages extends React.Component {
   componentDidMount() {
     this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
   }
-  
+
   componentDidUpdate(prevProps) {
     if (prevProps.messages.length < this.props.messages.length) {
       this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
@@ -67,7 +90,7 @@ class Messages extends React.Component {
     const { messages, player } = this.props;
 
     return (
-      <div className="messages" ref={el => (this.messagesEl = el)}>
+      <div className="messages" ref={(el) => (this.messagesEl = el)}>
         {messages.length === 0 ? (
           <div className="empty">No messages yet...</div>
         ) : null}

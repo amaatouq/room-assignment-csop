@@ -1,7 +1,10 @@
 import React from "react";
+import { TimeSync } from "meteor/mizzao:timesync";
+import moment from "moment";
 
 export default class Student extends React.Component {
-  handleDragStart = e => {
+  handleDragStart = (e) => {
+    console.log('timeSync',moment(TimeSync.serverTime(null, 1000)))
     const { student, stage, player } = this.props;
     const dragger = stage.get(`student-${student}-dragger`); //check if there is already a dragger
     //if so, you can't move it, already someone is moving it!
@@ -16,25 +19,28 @@ export default class Student extends React.Component {
       verb: "draggingStudent",
       subjectId: player._id,
       object: student,
-      at: new Date()
+      // at: new Date()
+      at: moment(TimeSync.serverTime(null, 1000)),
+      
     });
     e.dataTransfer.setData("text/plain", student);
+    console.log('student moment', moment(TimeSync.serverTime(null, 1000)))
   };
 
-  handleDragOver = e => {
+  handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  handleDragLeave = e => {
+  handleDragLeave = (e) => {
     e.preventDefault();
     console.log("released!");
     const { student, stage } = this.props;
     stage.set(`student-${student}-dragger`, null);
   };
 
-  handleDragEnd = e => {
+  handleDragEnd = (e) => {
     e.preventDefault();
-    const { student, stage, player} = this.props;
+    const { student, stage, player } = this.props;
     stage.set(`student-${student}-dragger`, null);
 
     //if dropped into non-allowed area
@@ -42,7 +48,7 @@ export default class Student extends React.Component {
       stage.append("log", {
         verb: "releasedStudent",
         subjectId: player._id,
-        object: student
+        object: student,
       });
     }
   };
@@ -54,7 +60,7 @@ export default class Student extends React.Component {
     const style = {};
     const cursorStyle = { cursor: null };
     if (dragger) {
-      const playerDragging = game.players.find(p => p._id === dragger);
+      const playerDragging = game.players.find((p) => p._id === dragger);
       if (playerDragging) {
         style.fill = playerDragging.get("nameColor");
         this.isDragabble = playerDragging === player._id; //only one can drag at a time

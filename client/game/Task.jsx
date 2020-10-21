@@ -4,6 +4,8 @@ import Room from "./Room.jsx";
 import Timer from "./Timer.jsx";
 import { HTMLTable } from "@blueprintjs/core";
 import { StageTimeWrapper } from "meteor/empirica:core";
+import { TimeSync } from "meteor/mizzao:timesync";
+import moment from "moment";
 
 const TimedButton_1 = StageTimeWrapper((props) => {
   const { player, onClick, activateAt, remainingSeconds, stage } = props;
@@ -78,8 +80,10 @@ export default class Task extends React.Component {
       verb: "playerSatisfaction",
       subjectId: player._id,
       state: satisfied ? "satisfied" : "unsatisfied",
-      at: new Date(),
+      // at: new Date()
+      at: moment(TimeSync.serverTime(null, 1000)),
     });
+    console.log("task moment", moment(TimeSync.serverTime(null, 1000)));
   };
 
   render() {
